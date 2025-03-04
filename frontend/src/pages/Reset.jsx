@@ -64,7 +64,7 @@ function Reset() {
     setenterotp("");
     setnewpassword("");
     setotp(null);
-    isverified(false);
+    setisverified(false);
   };
 
   return (
