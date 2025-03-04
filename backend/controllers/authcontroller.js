@@ -101,7 +101,7 @@ export const change = async (req, res) => {
 };
 export const reset = async (req, res) => {
   const { username, newpassword } = req.body;
-  const user = await User.findOne({ username }).select("-password");
+  const user = await User.findOne({ username });
   if (!user) return res.status(400).json({ message: "no user found " });
 
   const salt = await bcrypt.genSalt(10);
