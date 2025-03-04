@@ -73,7 +73,7 @@ export const logout = async (req, res) => {
 };
 export const change = async (req, res) => {
   const { username, password, newpassword } = req.body;
-  const user = await User.findOne({ username }).select("-password");
+  const user = await User.findOne({ username });
   if (!user) return res.status(400).json({ message: "no user found " });
   const ismatch = await bcrypt.compare(password, user.password);
   if (!ismatch)
