@@ -33,7 +33,7 @@ const AuthProvider = ({ children }) => {
   };
   // console.log("app is rendered");
   const otpgen = async (username) => {
-    if(user){
+   
     try {
       const res = await axios.post(
         `${Url}/api/otpgeneration`,
@@ -44,11 +44,11 @@ const AuthProvider = ({ children }) => {
 
       toast.success("otp sent successfully ");
     } catch (error) {
-      console.log(error);
-      toast.error(error.data?.response?.message);
+    
+      if(user) toast.error(error.data?.response?.message);
       setUser(null);
     }
-    }
+    
   };
   const login = async (username, password) => {
     try {
