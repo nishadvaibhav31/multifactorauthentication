@@ -47,7 +47,7 @@ function Reset() {
         { withCredentials: true }
       );
       setotp(res.data.verifyemail);
-      //   console.log(otp);
+        console.log(otp);
 
       toast.success("otp sent successfully ");
     } catch (error) {
