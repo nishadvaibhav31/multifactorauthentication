@@ -99,7 +99,7 @@ function Reset() {
             value={newpassword}
             onChange={(e) => setnewpassword(e.target.value)}
             placeholder="enter new password"
-            className={`${(!isverified)?'hidden':''} w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
+            className={`${!isverified?'hidden':''} w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
           />
 
           <button
