@@ -9,6 +9,7 @@ import emailroute from "./routes/emailroute.js"
 dotenv.config();
 
 const app = express();
+const PORT=process.env.PORT||3000;
 app.use(cookieParser());
 app.use(express.json());
 const corsOptions = {
@@ -27,7 +28,7 @@ app.get("/", (req, res) => {
 app.use("/api/",authroute);
 app.use("/api/",emailroute)
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   ConnectToMongoDb();
 
   console.log("App is listening on port 3000");
