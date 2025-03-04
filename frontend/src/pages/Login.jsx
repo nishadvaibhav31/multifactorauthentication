@@ -12,7 +12,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if(!user)  await login(username, password);
-    if(!otp&&!user) await otpgen(username);
+    if(!otp&&user) await otpgen(username);
    if(otp) await otpverify(username,enterotp);
     setenterotp("");
   };
