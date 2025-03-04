@@ -61,11 +61,13 @@ function Reset() {
 
     if (!otp) await otpgen(username);
     if (!isverified && otp) await otpverify(username, enterotp);
-    if (isverified) await changepass(username, newpassword);
+    if (isverified) {
+    await changepass(username, newpassword);
     setenterotp("");
     setnewpassword("");
     setotp(null);
     setisverified(false);
+    }
   };
 
   return (
