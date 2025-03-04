@@ -26,7 +26,7 @@ function Reset() {
   const otpverify = async (username, enterotp) => {
     try {
       await axios.post(
-        `${Url}http://localhost:3000/api/verifyotp`,
+        `${Url}/api/verifyotp`,
         { username, enterotp },
         { withCredentials: true }
       );
