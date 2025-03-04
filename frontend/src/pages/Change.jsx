@@ -15,6 +15,7 @@ function Change() {
         { username, password, newpassword },
         { withCredentials: true }
       );
+      toast.success("password change successfully ");
       navigate("/");
     } catch (error) {
       // console.log(error);
