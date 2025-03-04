@@ -83,7 +83,7 @@ function Reset() {
             value={username}
             onChange={(e) => setusername(e.target.value)}
             placeholder="enter username"
-            className={`   w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
+            className={`w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
             disabled={otp ? true : false}
           />
           <input
@@ -92,7 +92,7 @@ function Reset() {
             onChange={(e) => setenterotp(e.target.value)}
             placeholder="enter otp"
             className={` ${
-              !otp ? "hidden" : ""
+              (!otp)?"hidden" : ""
             }  w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
             disabled={isverified ? true : false}
           />
@@ -102,7 +102,7 @@ function Reset() {
             onChange={(e) => setnewpassword(e.target.value)}
             placeholder="enter new password"
             className={` ${
-              !isverified ? "hidden" : ""
+              (!isverified)?"hidden":""
             }  w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
           />
 
