@@ -46,6 +46,7 @@ function Reset() {
         { username },
         { withCredentials: true }
       );
+      console.log(res.data);
       setotp(res.data.verifyemail);
         console.log(otp);
 
