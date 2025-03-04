@@ -35,7 +35,7 @@ const AuthProvider = ({ children }) => {
   const otpgen = async (username) => {
     try {
       const res = await axios.post(
-        `${url}/api/otpgeneration`,
+        `${Url}/api/otpgeneration`,
         { username },
         { withCredentials: true }
       );
