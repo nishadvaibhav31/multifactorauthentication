@@ -13,7 +13,7 @@ const PORT=process.env.PORT||3000;
 app.use(cookieParser());
 app.use(express.json());
 const corsOptions = {
-  origin: "http://localhost:5173", // Your React frontend's origin
+  origin: "https://multifactorauthentication-frontend.onrender.com", // Your React frontend's origin
   methods: ["GET", "POST"],
   credentials: true, // Allow sending cookies and authentication info
 };
