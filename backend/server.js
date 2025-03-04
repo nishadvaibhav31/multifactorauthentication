@@ -1,0 +1,34 @@
+import express from "express";
+import dotenv from "dotenv";
+import { ConnectToMongoDb } from "./connection/ConnectDb.js";
+import authroute from "./routes/authroute.js";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import { tokenverification } from "./middleware/verifytoken.js";
+import emailroute from "./routes/emailroute.js"
+dotenv.config();
+
+const app = express();
+app.use(cookieParser());
+app.use(express.json());
+const corsOptions = {
+  origin: "http://localhost:5173", // Your React frontend's origin
+  methods: ["GET", "POST"],
+  credentials: true, // Allow sending cookies and authentication info
+};
+app.use(cors(corsOptions));
+
+app.get("/api/verifytoken", tokenverification, (req, res) => {
+  res.status(201).json({ message: "token verified", user:req.user });
+});
+app.get("/", (req, res) => {
+  res.status(200).send("Hello, World!");
+});
+app.use("/api/",authroute);
+app.use("/api/",emailroute)
+
+app.listen(3000, () => {
+  ConnectToMongoDb();
+
+  console.log("App is listening on port 3000");
+});
