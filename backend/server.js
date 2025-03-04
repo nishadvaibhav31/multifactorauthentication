@@ -31,5 +31,5 @@ app.use("/api/",emailroute)
 app.listen(PORT, () => {
   ConnectToMongoDb();
 
-  console.log("App is listening on port 3000");
+  console.log(`App is listening on port ${PORT}`);
 });
