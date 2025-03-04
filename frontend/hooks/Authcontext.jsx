@@ -10,11 +10,12 @@ const AuthProvider = ({ children }) => {
   );
   const [otp, setotp] = useState(null);
   const [isverified, setisverified] = useState(false);
+  const Url ='https://multifactorauthentication.onrender.com'
 
   const otpverify = async (username, enterotp) => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/verifyotp",
+        `${Url}/api/verifyotp`,
         { username, enterotp },
         { withCredentials: true }
       );
@@ -34,7 +35,7 @@ const AuthProvider = ({ children }) => {
   const otpgen = async (username) => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/otpgeneration",
+        `${url}/api/otpgeneration`,
         { username },
         { withCredentials: true }
       );
@@ -50,7 +51,7 @@ const AuthProvider = ({ children }) => {
   const login = async (username, password) => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/login",
+        `${Url}/api/login`,
         { username, password },
         { withCredentials: true }
       );
@@ -73,7 +74,7 @@ const AuthProvider = ({ children }) => {
   ) => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/signup",
+        `${Url}/api/signup`,
         { username, fullname, email, password, confirmpassword },
         { withCredentials: true }
       );
@@ -88,7 +89,7 @@ const AuthProvider = ({ children }) => {
   };
   const logout = async () => {
     await axios.post(
-      "http://localhost:3000/api/logout",
+      `${Url}/api/logout`,
       {},
       { withCredentials: true }
     );

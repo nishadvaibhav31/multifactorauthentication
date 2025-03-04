@@ -12,11 +12,11 @@ import toast from "react-hot-toast";
 
 function App() {
   const { user, setUser, isverified } = useContext(AuthContext);
-
+  const Url ='https://multifactorauthentication.onrender.com'
   useEffect(() => {
     if (user)
       axios
-        .get("http://localhost:3000/api/verifytoken", {
+        .get(`${Url}/api/verifytoken`, {
           withCredentials: true,
         })
         .catch((error) => {

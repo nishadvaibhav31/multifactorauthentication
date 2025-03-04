@@ -8,11 +8,11 @@ function Reset() {
   const [newpassword, setnewpassword] = useState("");
   const [otp, setotp] = useState(null);
   const [isverified, setisverified] = useState(false);
-
+  const Url ='https://multifactorauthentication.onrender.com'
   const changepass = async (username, newpassword) => {
     try {
       await axios.post(
-        "http://localhost:3000/api/reset",
+        `${Url}/api/reset`,
         { username, newpassword },
         { withCredentials: true }
       );
@@ -26,7 +26,7 @@ function Reset() {
   const otpverify = async (username, enterotp) => {
     try {
       await axios.post(
-        "http://localhost:3000/api/verifyotp",
+        `${Url}http://localhost:3000/api/verifyotp`,
         { username, enterotp },
         { withCredentials: true }
       );
@@ -42,7 +42,7 @@ function Reset() {
   const otpgen = async (username) => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/otpgeneration",
+        `${Url}/api/otpgeneration`,
         { username },
         { withCredentials: true }
       );

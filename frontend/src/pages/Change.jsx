@@ -11,7 +11,7 @@ function Change() {
     e.preventDefault();
     try {
       await axios.post(
-        "http://localhost:3000/api/change",
+        "https://multifactorauthentication.onrender.com/api/change",
         { username, password, newpassword },
         { withCredentials: true }
       );
