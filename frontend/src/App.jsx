@@ -38,7 +38,7 @@ function App() {
         />
         <Route
           path="/signup"
-          element={user ? <Navigate to="/" /> : <Signup />}
+          element={user && isverified ? <Navigate to="/" /> : <Signup />}
         />
         <Route path="/change" element={user ? <Change /> : <Login />} />
         <Route path="/reset" element={<Reset />} />
