@@ -21,7 +21,7 @@ function Signup() {
           setotp(null); 
            }
   };
-  if(user){
+ if(user){
   const deleteuser= async(username)=>{
   
     await axios.post(
@@ -31,7 +31,8 @@ function Signup() {
       );
 
   }
-  }
+ }
+  
   return (
     <div className="flex flex-col h-[100vh] justify-center items-center bg-gray-100">
       <h1 className="text-3xl font-bold mb-6">Signup</h1>
