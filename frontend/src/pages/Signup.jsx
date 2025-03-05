@@ -9,12 +9,13 @@ function Signup() {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [enterotp,setenterotp] =useState("");
-  const {user,signup,otpverify,otpgen,otp,setUser,setotp} = useContext(AuthContext);
+  const {signup,otpverify,otpgen,otp,setUser,setotp,logout} = useContext(AuthContext);
   const [confirmpassword, setcfpassword] = useState("");
   const Url ='https://multifactorauthentication.onrender.com';
+  const user=localStorage.getItem("user");
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!otp&&!user)  await signup(username, fullname, email, password, confirmpassword);
+    if(!otp)  await signup(username, fullname, email, password, confirmpassword);
     if(!otp&&user) await otpgen(username);
     if(otp){ await otpverify(username,enterotp);
     setenterotp("");
@@ -22,20 +23,7 @@ function Signup() {
             
            }
   };
- const deleteuser= async(username)=>{
-   try{    
-     console.log(username);
-    await axios.post(
-        `${Url}/api/delete`,
-        {username},
-        { withCredentials: true }
-      );
-    toast.success("Back to signup")
-   }
-   catch(error){
-   
-   }
- }
+ 
    
 
    
@@ -137,7 +125,7 @@ function Signup() {
                 setUser(null)
                 localStorage.removeItem("user")
                 setotp(null);
-                deleteuser({username});
+                 logout
              }}
                
              
