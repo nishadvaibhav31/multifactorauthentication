@@ -30,6 +30,7 @@ function Signup() {
         {username},
         { withCredentials: true }
       );
+    toast.success("Back to signup")
   }catch(error){
     console.log("error is here");
   }
