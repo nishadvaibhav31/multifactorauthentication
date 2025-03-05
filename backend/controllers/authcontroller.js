@@ -127,6 +127,8 @@ export const deleteuser= async(req,res)=>{
 const username=req.body;
   try{
  const user = await User.findOneAndDelete({ username });
+ res.clearCookie("auth_token");
+  
   
   res.status(200).json({message:"user deleted successfully"});
   }
