@@ -23,15 +23,7 @@ function Signup() {
            }
   };
  
-  const deleteuser= async(username)=>{
-  try{
-    await axios.post(
-        `${Url}/api/delete`,
-        {username},
-        { withCredentials: true }
-      );
-  }catch(error){}
- }
+
   
   return (
     <div className="flex flex-col h-[100vh] justify-center items-center bg-gray-100">
@@ -122,13 +114,19 @@ function Signup() {
           Already have an account?
         </Link>
         <button
-             onClick={()=>{
-          
-            setUser(null)
+             onClick={async(username)=>{
+  try{
+             setUser(null)
             localStorage.removeItem("user")
             setotp(null)
-            deleteuser(username)
-          }
+    await axios.post(
+        `${Url}/api/delete`,
+        {username},
+        { withCredentials: true }
+      );
+  }catch(error){}
+ }
+               
              }
             className={`${!otp?'hidden':''} w-full p-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500`}
           >
