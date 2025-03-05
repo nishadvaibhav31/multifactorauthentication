@@ -126,11 +126,12 @@ export const reset = async (req, res) => {
 export const deleteuser= async(req,res)=>{
 const username=req.body;
   try{
-  await User.findOneAndDelete({username});
+ const user = await User.findOneAndDelete({ username });
   
   res.status(200).json({message:"user deleted successfully"});
   }
   catch(error){
-    // res.status(400).json({message:error.message});
+    
+    res.status(400).json({message:"error in deleting user"});
 }
 }
