@@ -40,12 +40,13 @@ const AuthProvider = ({ children }) => {
         { username },
         { withCredentials: true }
       );
-      setotp(res.data.verifyemail);
-
-      toast.success("otp sent successfully ");
+     if(user) {setotp(res.data.verifyemail);
+toast.success("otp sent successfully ");
+              }
     } catch (error) {
-    
+      
       if(user) toast.error(error.data?.response?.message);
+      
       setUser(null);
     }
     
