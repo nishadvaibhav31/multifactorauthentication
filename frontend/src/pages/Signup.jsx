@@ -111,7 +111,7 @@ function Signup() {
             className="w-full p-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
            {
-            otp?(user?<h2>generate Otp</h2>:<h2>Verify Otp</h2>):(<h2>Signup</h2>)
+            user?(!otp?<h2>generate Otp</h2>:<h2>Verify Otp</h2>):(<h2>Signup</h2>)
            }
           </button>
            <button
