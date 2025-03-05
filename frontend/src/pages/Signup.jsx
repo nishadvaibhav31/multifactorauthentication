@@ -21,7 +21,7 @@ function Signup() {
           setotp(null); 
            }
   };
-  const delete= async(username)=>{
+  const deleteuser= async(username)=>{
   
     await axios.post(
         `${Url}/api/delete`,
@@ -114,10 +114,11 @@ function Signup() {
           </button>
            <button
              onClick(()=>{
+            deleteuser(username)
             setUser(null)
             localStorage.removeItem("user")
-            setotp(null);
-            await delete(username);
+            setotp(null)
+          }
              )
             className=`${!otp?'hidden':''} w-full p-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500`
           >
