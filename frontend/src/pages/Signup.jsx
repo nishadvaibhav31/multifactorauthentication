@@ -15,15 +15,15 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if(!otp&&!user)  await signup(username, fullname, email, password, confirmpassword);
-    if(!otp) await otpgen(username);
+    if(!otp&&user) await otpgen(username);
     if(otp){ await otpverify(username,enterotp);
     setenterotp("");
           setotp(null); 
            }
   };
- if(user){
+ 
   const deleteuser= async(username)=>{
-  
+  if(user){
     await axios.post(
         `${Url}/api/delete`,
         { username},
@@ -111,7 +111,7 @@ function Signup() {
             className="w-full p-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
            {
-            otp?(<h2>Verify Otp</h2>):(<h2>Signup</h2>)
+            otp?(user?<h2>generate Otp</h2>:<h2>Verify Otp</h2>):(<h2>Signup</h2>)
            }
           </button>
            <button
