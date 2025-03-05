@@ -21,7 +21,7 @@ const AuthProvider = ({ children }) => {
       );
       // console.log(res);
       setisverified(true);
-      toast.success("login success");
+      toast.success("otp verified succesfully ");
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data?.message);
@@ -84,7 +84,7 @@ toast.success("otp sent successfully ");
       );
       localStorage.setItem("user", JSON.stringify(response.data.user));
       setUser(response.data.user);
-      toast.success("Signup successful!");
+      toast.success("User Created");
     } catch (error) {
       // console.log(error);
       toast.error(error.response?.data?.message||'Error in signup');
