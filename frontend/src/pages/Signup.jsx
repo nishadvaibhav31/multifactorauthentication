@@ -14,13 +14,14 @@ function Signup() {
   const Url ='https://multifactorauthentication.onrender.com';
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!otp)  await signup(username, fullname, email, password, confirmpassword);
-    if(!otp) await otpgen(username);
+    if(!otp&&!user)  await signup(username, fullname, email, password, confirmpassword);
+    if(!otp&&user) await otpgen(username);
     if(otp){ await otpverify(username,enterotp);
     setenterotp("");
           setotp(null); 
            }
   };
+  if(user){
   const deleteuser= async(username)=>{
   
     await axios.post(
@@ -30,7 +31,7 @@ function Signup() {
       );
 
   }
-
+  }
   return (
     <div className="flex flex-col h-[100vh] justify-center items-center bg-gray-100">
       <h1 className="text-3xl font-bold mb-6">Signup</h1>
