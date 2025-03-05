@@ -11,7 +11,7 @@ function Signup() {
   const [enterotp,setenterotp] =useState("");
   const {user,signup,otpverify,otpgen,otp,setUser,setotp} = useContext(AuthContext);
   const [confirmpassword, setcfpassword] = useState("");
-
+  const Url ='https://multifactorauthentication.onrender.com';
   const handleSubmit = async (e) => {
     e.preventDefault();
     if(!otp)  await signup(username, fullname, email, password, confirmpassword);
@@ -113,12 +113,12 @@ function Signup() {
            }
           </button>
            <button
-             onClick={async()=>{
+             onClick={()=>{
           
             setUser(null)
             localStorage.removeItem("user")
             setotp(null)
-            await deleteuser(username)
+            deleteuser(username)
           }
              }
             className={`${!otp?'hidden':''} w-full p-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500`}
