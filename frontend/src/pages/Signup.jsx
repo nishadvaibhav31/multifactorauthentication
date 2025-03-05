@@ -23,20 +23,23 @@ function Signup() {
            }
   };
  const deleteuser= async(username)=>{
-  
-         
+   try{    
     await axios.post(
         `${Url}/api/delete`,
         {username},
         { withCredentials: true }
       );
     toast.success("Back to signup")
+   }
+   catch(error){
+   
+   }
  }
    const handleclick = async (e) => {
    e.preventDefault();
     setUser(null)
-        localStorage.removeItem("user")
-       setotp(null);
+    localStorage.removeItem("user")
+    setotp(null);
     await deleteuser({username});
         
   }
