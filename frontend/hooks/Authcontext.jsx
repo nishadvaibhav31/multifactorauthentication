@@ -86,7 +86,7 @@ toast.success("otp sent successfully ");
       toast.success("Signup successful!");
     } catch (error) {
       // console.log(error);
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message||'Error in signup');
       setUser(null);
     }
   };
