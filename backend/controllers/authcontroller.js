@@ -30,7 +30,7 @@ export const login = async (req, res) => {
 };
 export const signup = async (req, res) => {
   const { username, fullname, email, password, confirmpassword } = req.body;
- 
+
   if (await User.findOne({ username }))
     return res.status(400).json({ message: "username already taken" });
   if (await User.findOne({ email }))
@@ -82,7 +82,7 @@ export const change = async (req, res) => {
     return res.status(400).json({ message: "please enter new password" });
   const salt = await bcrypt.genSalt(10);
   const newhashpass = await bcrypt.hash(newpassword, salt);
- 
+
   try {
     const updateuser = await User.findByIdAndUpdate(
       user._id,
@@ -120,7 +120,22 @@ export const reset = async (req, res) => {
     );
     res.status(200).json({ message: "reset succesfully" });
   } catch (error) {
- 
+
   }
 };
+export const deleteuser = async (req, res) => {
+  const {username} = req.body;
 
+  try {
+  const user= await User.findOneAndRemove({username:username});
+    if(!user){
+    res.status(404).json({message:"no user found "});
+    }
+
+    res.clearCookie("auth_token");
+
+    return res.status(200).json({ message: "user deleted successfully" });
+  } catch (error) {
+    return res.status(400).json({ message: "error in deleting user" });
+  }
+};
