@@ -133,8 +133,9 @@ const {username}=req.body;
   res.clearCookie("auth_token");  
  
 
-  res.status(200).json({message:"user deleted successfully"});
+  return res.status(200).json({message:"user deleted successfully"});
   }
   catch(error){
+  retunr res.status(400).json({message:"error in deleting user"});
 }
-}
+};
