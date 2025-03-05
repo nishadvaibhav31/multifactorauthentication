@@ -15,7 +15,7 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if(!otp&&!user)  await signup(username, fullname, email, password, confirmpassword);
-    if(!otp&&user) await otpgen(username);
+    if(!otp) await otpgen(username);
     if(otp){ await otpverify(username,enterotp);
     setenterotp("");
           setotp(null); 
