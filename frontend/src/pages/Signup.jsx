@@ -48,7 +48,7 @@ function Signup() {
             onChange={(e) => setusername(e.target.value)}
             required
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-             disabled ={otp?true:false}
+             disabled ={user?true:false}
           />
         </div>
         <div className="mb-4">
@@ -59,7 +59,7 @@ function Signup() {
             onChange={(e) => setfullname(e.target.value)}
             required
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-             disabled ={otp?true:false}
+             disabled ={user?true:false}
           />
         </div>
         <div className="mb-4">
@@ -70,7 +70,7 @@ function Signup() {
             onChange={(e) => setemail(e.target.value)}
             required
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-             disabled ={otp?true:false}
+             disabled ={user?true:false}
           />
         </div>
         <div className="mb-4">
@@ -81,7 +81,7 @@ function Signup() {
             onChange={(e) => setpassword(e.target.value)}
             required
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-             disabled ={otp?true:false}
+             disabled ={user?true:false}
           />
         </div>
         <div className="mb-4">
@@ -92,7 +92,7 @@ function Signup() {
             onChange={(e) => setcfpassword(e.target.value)}
             required
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-             disabled ={otp?true:false}
+             disabled ={user?true:false}
           />
         </div>
          <div className={`mb-4 ${!otp?'hidden':''}`}>
