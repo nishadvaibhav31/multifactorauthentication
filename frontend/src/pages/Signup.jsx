@@ -24,6 +24,7 @@ function Signup() {
   };
  const deleteuser= async(username)=>{
    try{    
+     console.log(username);
     await axios.post(
         `${Url}/api/delete`,
         {username},
