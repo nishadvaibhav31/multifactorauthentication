@@ -123,19 +123,21 @@ export const reset = async (req, res) => {
     // console.log(error.message);
   }
 };
-export const deleteuser= async(req,res)=>{
-const {username}=req.body;
+export const deleteuser = async (req, res) => {
+  const { username } = req.body;
   console.log(username);
-  try{
-    
-  
-  const x=await User.findOneAndDelete({username});
-  res.clearCookie("auth_token");  
- 
 
-  return res.status(200).json({message:"user deleted successfully"});
+  try {
+    const x = await User.findOneAndDelete({ username });
+    
+    if (!x) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.clearCookie("auth_token");
+
+    return res.status(200).json({ message: "user deleted successfully" });
+  } catch (error) {
+    return res.status(400).json({ message: "error in deleting user" });
   }
-  catch(error){
-  return res.status(400).json({message:"error in deleting user"});
-}
 };
