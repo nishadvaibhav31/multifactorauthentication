@@ -22,7 +22,7 @@ function Signup() {
 
            }
   };
- const deleteuser= async(username)=>{
+ const deleteuser= async()=>{
    try{    
      console.log(username);
     await axios.post(
