@@ -23,7 +23,7 @@ function Signup() {
            }
   };
  const deleteuser= async(username)=>{
-  try{
+  
          
     await axios.post(
         `${Url}/api/delete`,
@@ -31,10 +31,6 @@ function Signup() {
         { withCredentials: true }
       );
     toast.success("Back to signup")
-  }catch(error){
-    console.log("error is here");
-  }
-
  }
    const handleclick = async (e) => {
    e.preventDefault();
