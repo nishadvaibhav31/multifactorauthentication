@@ -33,7 +33,9 @@ function Signup() {
   }catch(error){
     console.log("error is here");
   }
-  const handleclick = async (e) => {
+
+ }
+   const handleclick = async (e) => {
    e.preventDefault();
     setUser(null)
         localStorage.removeItem("user")
@@ -41,7 +43,6 @@ function Signup() {
     await deleteuser({username});
         
   }
- }
  
 
   
