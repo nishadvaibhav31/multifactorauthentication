@@ -23,14 +23,13 @@ function Signup() {
   };
  
   const deleteuser= async(username)=>{
-  if(user){
+  try{
     await axios.post(
         `${Url}/api/delete`,
-        { username},
+        {username},
         { withCredentials: true }
       );
-
-  }
+  }catch(error){}
  }
   
   return (
