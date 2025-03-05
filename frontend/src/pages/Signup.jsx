@@ -9,7 +9,7 @@ function Signup() {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [enterotp,setenterotp] =useState("");
-  const {user,signup,,otpverify,otpgen,otp,setUser,setotp} = useContext(AuthContext);
+  const {user,signup,otpverify,otpgen,otp,setUser,setotp} = useContext(AuthContext);
   const [confirmpassword, setcfpassword] = useState("");
 
   const handleSubmit = async (e) => {
