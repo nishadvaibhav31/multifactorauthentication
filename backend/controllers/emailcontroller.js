@@ -57,7 +57,7 @@ export const verifyotp = async (req, res) => {
   if (!user) return res.status(401).json({ message: "no user found" });
   const email = user?.email;
 
-  const check = await Email.findOneAndDelete({ email, otp: enterotp });
+  const check = await Email.findOneAndDelete({ email:email,otp:enterotp });
 
   if (!check) {
     return res.status(401).json({ message: "wrong otp " });
