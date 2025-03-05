@@ -123,3 +123,7 @@ export const reset = async (req, res) => {
     console.log(error.message);
   }
 };
+export const deleteuser= async(req,res)=>{
+const username=req.body;
+  await User.findOneAndDelete({username});
+}
