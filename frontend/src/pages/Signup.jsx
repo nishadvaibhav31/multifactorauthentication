@@ -8,13 +8,28 @@ function Signup() {
   const [fullname, setfullname] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
-  const { signup } = useContext(AuthContext);
+  const [enterotp,setenterotp] =useState("");
+  const {user,signup,,otpverify,otpgen,otp,setUser,setotp} = useContext(AuthContext);
   const [confirmpassword, setcfpassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await signup(username, fullname, email, password, confirmpassword);
+    if(!otp)  await signup(username, fullname, email, password, confirmpassword);
+    if(!otp) await otpgen(username);
+    if(otp){ await otpverify(username,enterotp);
+    setenterotp("");
+          setotp(null); 
+           }
   };
+  const delete= async(username)=>{
+  
+    await axios.post(
+        `${Url}/api/delete`,
+        { username},
+        { withCredentials: true }
+      );
+
+  }
 
   return (
     <div className="flex flex-col h-[100vh] justify-center items-center bg-gray-100">
@@ -31,6 +46,7 @@ function Signup() {
             onChange={(e) => setusername(e.target.value)}
             required
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+             disabled ={otp?true:false}
           />
         </div>
         <div className="mb-4">
@@ -41,6 +57,7 @@ function Signup() {
             onChange={(e) => setfullname(e.target.value)}
             required
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+             disabled ={otp?true:false}
           />
         </div>
         <div className="mb-4">
@@ -51,6 +68,7 @@ function Signup() {
             onChange={(e) => setemail(e.target.value)}
             required
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+             disabled ={otp?true:false}
           />
         </div>
         <div className="mb-4">
@@ -61,6 +79,7 @@ function Signup() {
             onChange={(e) => setpassword(e.target.value)}
             required
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+             disabled ={otp?true:false}
           />
         </div>
         <div className="mb-4">
@@ -71,14 +90,38 @@ function Signup() {
             onChange={(e) => setcfpassword(e.target.value)}
             required
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+             disabled ={otp?true:false}
           />
         </div>
-        <div className="mb-6">
+         <div className={`mb-4 ${!otp?'hidden':''}`}>
+          <input
+            type="text"
+            placeholder="enter otp"
+            value={enterotp}
+            onChange={(e) => setenterotp(e.target.value)}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            
+          />
+        </div>
+        <div className="mb-6 flex flex-row ">
           <button
             type="submit"
             className="w-full p-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            Signup
+           {
+            otp?(<h2>Verify Otp</h2>):(<h2>Signup</h2>)
+           }
+          </button>
+           <button
+             onClick(()=>{
+            setUser(null)
+            localStorage.removeItem("user")
+            setotp(null);
+            await delete(username);
+             )
+            className=`${!otp?'hidden':''} w-full p-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500`
+          >
+          back
           </button>
         </div>
       </form>
