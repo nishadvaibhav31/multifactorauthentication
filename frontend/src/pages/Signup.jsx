@@ -113,12 +113,12 @@ function Signup() {
            }
           </button>
            <button
-             onClick={()=>{
+             onClick={async()=>{
           
             setUser(null)
             localStorage.removeItem("user")
             setotp(null)
-           await  deleteuser(username)
+            await deleteuser(username)
           }
              }
             className={`${!otp?'hidden':''} w-full p-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500`}
