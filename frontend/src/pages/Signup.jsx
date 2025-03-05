@@ -41,7 +41,7 @@ function Signup() {
     await deleteuser({username});
         
   }
-
+ }
  
 
   
