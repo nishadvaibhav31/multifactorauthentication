@@ -114,7 +114,14 @@ function Signup() {
             user?(!otp?<h2>generate Otp</h2>:<h2>Verify Otp</h2>):(<h2>Signup</h2>)
            }
           </button>
-           <button
+           
+        </div>
+      </form>
+      <div className="mt-4 flex flex-col">
+        <Link to="/login" className="text-blue-500 hover:underline">
+          Already have an account?
+        </Link>
+        <button
              onClick={()=>{
           
             setUser(null)
@@ -127,12 +134,6 @@ function Signup() {
           >
           back
           </button>
-        </div>
-      </form>
-      <div className="mt-4">
-        <Link to="/login" className="text-blue-500 hover:underline">
-          Already have an account?
-        </Link>
       </div>
     </div>
   );
