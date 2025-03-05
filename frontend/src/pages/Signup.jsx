@@ -9,29 +9,44 @@ function Signup() {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [enterotp,setenterotp] =useState("");
-  const {signup,otpverify,otpgen,otp,setUser,setotp,logout} = useContext(AuthContext);
+  const {user,signup,otpverify,otpgen,otp,setUser,setotp} = useContext(AuthContext);
   const [confirmpassword, setcfpassword] = useState("");
   const Url ='https://multifactorauthentication.onrender.com';
-  const user=localStorage.getItem("user");
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!otp)  await signup(username, fullname, email, password, confirmpassword);
+    if(!otp&&!user)  await signup(username, fullname, email, password, confirmpassword);
     if(!otp&&user) await otpgen(username);
     if(otp){ await otpverify(username,enterotp);
     setenterotp("");
           setotp(null); 
-            
+
            }
   };
- 
-   
+ const deleteuser= async(username)=>{
+   try{    
+     console.log(username);
+    await axios.post(
+        `${Url}/api/delete`,
+        {username},
+        { withCredentials: true }
+      );
+    toast.success("Back to signup")
+   }
+   catch(error){
 
-   
-        
+   }
+ }
+   const handleclick = async (e) => {
+   e.preventDefault();
+    setUser(null)
+    localStorage.removeItem("user")
+    setotp(null);
+    await deleteuser({username});
 
- 
+  }
 
-  
+
+
   return (
     <div className="flex flex-col h-[100vh] justify-center items-center bg-gray-100">
       <h1 className="text-3xl font-bold mb-6">Signup</h1>
@@ -101,7 +116,7 @@ function Signup() {
             value={enterotp}
             onChange={(e) => setenterotp(e.target.value)}
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            
+
           />
         </div>
         <div className="mb-6 flex flex-row ">
@@ -113,7 +128,7 @@ function Signup() {
             user?(!otp?<h2>generate Otp</h2>:<h2>Verify Otp</h2>):(<h2>Signup</h2>)
            }
           </button>
-           
+
         </div>
       </form>
       <div className="mt-4 flex flex-col">
@@ -121,14 +136,14 @@ function Signup() {
           Already have an account?
         </Link>
         <button
-             onClick={()=>{
-                setUser(null)
-                localStorage.removeItem("user")
-                setotp(null);
-                 logout
-             }}
-               
-             
+             onClick={handleclick}
+
+
+
+
+
+
+
             className={`${!otp?'hidden':''} w-full p-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500`}
           >
           back
