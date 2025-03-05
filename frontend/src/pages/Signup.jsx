@@ -38,6 +38,7 @@ function Signup() {
  }
    const handleclick = async (e) => {
    e.preventDefault();
+     
     setUser(null)
     localStorage.removeItem("user")
     setotp(null);
