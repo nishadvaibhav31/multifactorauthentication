@@ -10,7 +10,7 @@ const AuthProvider = ({ children }) => {
   );
   const [otp, setotp] = useState(null);
   const [isverified, setisverified] = useState(false);
-  const Url ='http://localhost:4000'
+  const Url ='https://multifactorauthentication.onrender.com'
 
   const otpverify = async (token, enterotp,email) => {
     try {

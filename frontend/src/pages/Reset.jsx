@@ -8,7 +8,7 @@ function Reset() {
   const [newpassword, setnewpassword] = useState("");
   const [otp, setotp] = useState(null);
   const [isverified, setisverified] = useState(false);
-  const Url ='http://localhost:4000'
+  const Url ='https://multifactorauthentication.onrender.com'
   const token=JSON.parse(localStorage.getItem("token"));
   const changepass = async (email, newpassword) => {
     try {

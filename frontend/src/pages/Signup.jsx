@@ -12,7 +12,7 @@ function Signup() {
   const {user,signup,otpverify,otpgen,otp,setUser,setotp,isverified,setisverified} = useContext(AuthContext);
   const [confirmpassword, setcfpassword] = useState("");
   const token=JSON.parse(localStorage.getItem("otp"));
-  const Url ='http://localhost:4000';
+  const Url ='https://multifactorauthentication.onrender.com';
   const handleSubmit = async (e) => {
     e.preventDefault();
    
