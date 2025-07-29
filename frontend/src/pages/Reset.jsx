@@ -60,7 +60,7 @@ function Reset() {
       setStep(3);
     } catch (error) {
       if (error.response?.status === 429) {
-        toast.error(error.response?.data?.message || "Too many attempts. Please try again later.");
+        toast.error(error.response?.data?.message || "Too many verification attempts. Please try again after 5 min.");
         navigate("/login");
       } else {
         toast.error(error.response?.data?.message || "Failed to verify OTP. Please check the code and try again.");
