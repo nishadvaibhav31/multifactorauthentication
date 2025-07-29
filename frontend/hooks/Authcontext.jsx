@@ -27,7 +27,11 @@ const AuthProvider = ({ children }) => {
       toast.success(`Otp verified successfully`);
       return true;
     } catch (error) {
-      toast.error("Wrong OTP");
+       if (error.response?.status === 429) {
+        toast.error(error.response?.data?.message || "Too many Verification attempt. Please try again after 5 minutes.");
+      } else {
+        toast.error(error.response?.data?.message || "Wrong OTP");
+      }
       setotp(null);
       setUser(null);
       return false;
