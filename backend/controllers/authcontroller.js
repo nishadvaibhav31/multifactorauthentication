@@ -49,14 +49,14 @@ export const signup = async (req, res) => {
   });
  
   await newUser.save();
-  const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET_KEY, {
-    expiresIn: "5m",
-  });
-  res.cookie("auth_token", token, {
-    httpOnly: true,
-    maxAge: 5 * 60 * 1000,
-    sameSite: "Strict",
-  });
+  // const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET_KEY, {
+  //   expiresIn: "5m",
+  // });
+  // res.cookie("auth_token", token, {
+  //   httpOnly: true,
+  //   maxAge: 5 * 60 * 1000,
+  //   sameSite: "Strict",
+  // });
   return res.status(201).json({
     message: "signup successfull",
     user: {
