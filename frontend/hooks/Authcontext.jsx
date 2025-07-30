@@ -38,11 +38,11 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const otpgen = async ({email,password)) => {
+  const otpgen = async (email) => {
     try {
       const res = await axios.post(
         `${Url}/api/otpgeneration`,
-        { email,password},
+        { email},
         { withCredentials: true }
       );
       setotp(res.data.token);
