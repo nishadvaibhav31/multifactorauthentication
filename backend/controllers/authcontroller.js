@@ -1,151 +1,149 @@
 import jwt from "jsonwebtoken";
 import User from "../models/users.model.js";
-import bcrypt, { genSalt } from "bcryptjs";
+import bcrypt from "bcryptjs";
 
+// LOGIN
 export const login = async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password)
-    return res.status(401).json({ message: "please fill all field " });
-  const user = await User.findOne({email});
+  try {
+    const { email, password } = req.body;
+    if (!email || !password)
+      return res.status(400).json({ message: "Please fill all fields" });
 
-  if (!user) return res.status(400).json({ message: "invalid email" });
-  const checkpass = await bcrypt.compare(password, user.password);
-  if (!checkpass)
-    return res.status(400).json({ message: "invalid credentials" });
-  // const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, {
-  //   expiresIn: "5m",
-  // });
-  // res.cookie("auth_token", token, {
-  //   httpOnly: true,
-  //   maxAge: 5 * 60 * 1000,
-  //   sameSite: "Strict",
-  });
-  return res.status(200).json({
-    message: "login successfully",
-    user: {
-      username:user.email,
-      email: user.email,
-    },
-  });
+    const user = await User.findOne({ email });
+    if (!user)
+      return res.status(400).json({ message: "Invalid email" });
+
+    const checkpass = await bcrypt.compare(password, user.password);
+    if (!checkpass)
+      return res.status(400).json({ message: "Invalid credentials" });
+
+    // Uncomment for JWT
+    // const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, {
+    //   expiresIn: "5m",
+    // });
+    // res.cookie("auth_token", token, {
+    //   httpOnly: true,
+    //   maxAge: 5 * 60 * 1000,
+    //   sameSite: "Strict",
+    // });
+
+    return res.status(200).json({
+      message: "Login successful",
+      user: {
+        username: user.username,
+        email: user.email,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "Server error" });
+  }
 };
-export const signup = async (req, res) => {
-  const { username, fullname, email, password, confirmpassword } = req.body;
 
-  if (await User.findOne({ username }))
-    return res.status(400).json({ message: "username already taken" });
-  if (await User.findOne({ email }))
-    return res.status(400).json({ message: "email already taken" });
-  if (password !== confirmpassword)
-    return res.status(400).json({ message: "password doesn't match" });
- 
-    
-  const salt = await bcrypt.genSalt(10);
-  const hashpassword = await bcrypt.hash(password, salt);
-  const newUser = new User({
-    username,
-    fullname,
-    email,
-    password: hashpassword,
-  });
- 
-  await newUser.save();
-  // const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET_KEY, {
-  //   expiresIn: "5m",
-  // });
-  // res.cookie("auth_token", token, {
-  //   httpOnly: true,
-  //   maxAge: 5 * 60 * 1000,
-  //   sameSite: "Strict",
-  // });
-  return res.status(201).json({
-    message: "signup successfull",
-    user: {
+// SIGNUP
+export const signup = async (req, res) => {
+  try {
+    const { username, fullname, email, password, confirmpassword } = req.body;
+
+    if (await User.findOne({ username }))
+      return res.status(400).json({ message: "Username already taken" });
+
+    if (await User.findOne({ email }))
+      return res.status(400).json({ message: "Email already taken" });
+
+    if (password !== confirmpassword)
+      return res.status(400).json({ message: "Passwords do not match" });
+
+    const salt = await bcrypt.genSalt(10);
+    const hashpassword = await bcrypt.hash(password, salt);
+
+    const newUser = new User({
       username,
       fullname,
       email,
-    },
-  });
+      password: hashpassword,
+    });
 
-  res.status(200).json({message:"generate otp for signup",user: {
-    username,
-    fullname,
-    email,
-  },})
+    await newUser.save();
 
+    return res.status(201).json({
+      message: "Signup successful",
+      user: {
+        username,
+        fullname,
+        email,
+      },
+    });
 
+  } catch (error) {
+    return res.status(500).json({ message: "Signup failed", error: error.message });
+  }
 };
 
+// LOGOUT
 export const logout = async (req, res) => {
   res.clearCookie("auth_token");
-
-  return res.status(200).json({ message: "logout successfully" });
-
+  return res.status(200).json({ message: "Logout successful" });
 };
+
+// CHANGE PASSWORD
 export const change = async (req, res) => {
-  const { username, password, newpassword } = req.body;
-  const user = await User.findOne({ username });
-  if (!user) return res.status(400).json({ message: "no user found " });
-  const ismatch = await bcrypt.compare(password, user.password);
-  if (!ismatch)
-    return res.status(400).json({ message: "incorrect credentials" });
-  if (password === newpassword)
-    return res.status(400).json({ message: "please enter new password" });
-  const salt = await bcrypt.genSalt(10);
-  const newhashpass = await bcrypt.hash(newpassword, salt);
-
   try {
-    const updateuser = await User.findByIdAndUpdate(
-      user._id,
-      {
-        password: newhashpass,
-      },
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
-    res.status(200).json({ message: "reset succesfully" });
+    const { username, password, newpassword } = req.body;
+
+    const user = await User.findOne({ username });
+    if (!user)
+      return res.status(400).json({ message: "No user found" });
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch)
+      return res.status(400).json({ message: "Incorrect credentials" });
+
+    if (password === newpassword)
+      return res.status(400).json({ message: "Please enter a new password" });
+
+    const salt = await bcrypt.genSalt(10);
+    const newHashed = await bcrypt.hash(newpassword, salt);
+
+    await User.findByIdAndUpdate(user._id, { password: newHashed }, { new: true });
+
+    return res.status(200).json({ message: "Password changed successfully" });
   } catch (error) {
-    console.log(error.message);
+    return res.status(500).json({ message: "Error updating password", error: error.message });
   }
 };
+
+// RESET PASSWORD
 export const reset = async (req, res) => {
-  const { email, newpassword } = req.body;
-  const user = await User.findOne({email});
-  if (!user) return res.status(400).json({ message: "no user found " });
-
-  const salt = await bcrypt.genSalt(10);
-  const newhashpass = await bcrypt.hash(newpassword, salt);
-
   try {
-    const updateuser = await User.findByIdAndUpdate(
-      user._id,
-      {
-        password: newhashpass,
-      },
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
-    res.status(200).json({ message: "reset succesfully" });
-  } catch (error) {
+    const { email, newpassword } = req.body;
 
+    const user = await User.findOne({ email });
+    if (!user)
+      return res.status(400).json({ message: "No user found" });
+
+    const salt = await bcrypt.genSalt(10);
+    const newHash = await bcrypt.hash(newpassword, salt);
+
+    await User.findByIdAndUpdate(user._id, { password: newHash }, { new: true });
+
+    return res.status(200).json({ message: "Password reset successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: "Error resetting password", error: error.message });
   }
 };
-export const deleteuser = async (req, res) => {
-  const {username} = req.body;
 
+// DELETE USER
+export const deleteuser = async (req, res) => {
   try {
-  const user= await User.findOneAndRemove({username:username});
-    if(!user){
-    res.status(404).json({message:"no user found "});
-    }
+    const { username } = req.body;
+
+    const user = await User.findOneAndRemove({ username });
+    if (!user)
+      return res.status(404).json({ message: "No user found" });
 
     res.clearCookie("auth_token");
-
-    return res.status(200).json({ message: "user deleted successfully" });
+    return res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
-    return res.status(400).json({ message: "error in deleting user" });
+    return res.status(400).json({ message: "Error deleting user", error: error.message });
   }
 };
