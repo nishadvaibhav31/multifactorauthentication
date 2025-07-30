@@ -34,8 +34,9 @@ function Signup() {
 
     if (isOtpValid) {
       await signup(username, fullname, email, password, confirmpassword);
-      navigate('/login');
       setotp(null);
+      navigate('/login');
+      
     }
     
     setIsLoading(false);
