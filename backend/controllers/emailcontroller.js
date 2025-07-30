@@ -103,13 +103,13 @@ export const verifyotp = async (req, res) => {
     return res.status(401).json({ message: "wrong otp" });
   }
   // if(check==="login"){
- const token = jwt.sign(
+ const anothertoken = jwt.sign(
   { userId: user._id },
   process.env.JWT_SECRET_KEY,
   { expiresIn: "1h" } 
 );
 
-res.cookie("auth_token", token, {
+res.cookie("auth_token", anothertoken, {
   httpOnly: true,
   maxAge: 60 * 60 * 1000, // 1 hour in ms
   sameSite: "Strict",
