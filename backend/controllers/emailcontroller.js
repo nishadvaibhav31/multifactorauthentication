@@ -44,7 +44,7 @@ export const otpgens = async (req, res) => {
 };
 export const otpgen = async (req, res) => {
   const { email} = req.body;
-  console.log(req.path);
+  
   
   try {
   
@@ -96,7 +96,7 @@ export const verifyotpls = async (req, res) => {
  
   
   const decode =jwt.verify(token,process.env.JWT_SECRET_KEY);
- 
+  console.log(user);
   const user=await User.findOne({email});
   
 
