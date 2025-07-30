@@ -113,7 +113,7 @@ res.cookie("auth_token", anothertoken, {
   httpOnly: true,
   secure:"true",
   maxAge: 60 * 60 * 1000, // 1 hour in ms
-  sameSite: "Strict",
+  sameSite: "None",
 });
   
   return res.status(200).json({
