@@ -13,7 +13,7 @@ function Signup() {
   const [isLoading, setIsLoading] = useState(false);
   const [signupStep, setSignupStep] = useState('details');
 
-  const { otp, otpgens, otpverify, signup, setUser, setotp } = useContext(AuthContext);
+  const { otp, otpgens, otpverify, signup, setUser, setotp,setisverified } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleDetailsSubmit = async (e) => {
@@ -34,7 +34,8 @@ function Signup() {
 
     if (isOtpValid) {
       await signup(username, fullname, email, password, confirmpassword);
-      setotp(null);
+      setisverified(false);
+      
       navigate('/login');
       
     }
