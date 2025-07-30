@@ -102,7 +102,7 @@ export const verifyotp = async (req, res) => {
   if (decode.otp!=enterotp) {
     return res.status(401).json({ message: "wrong otp" });
   }
-  
+  if(user){
  const anothertoken = jwt.sign(
   { userId: user._id },
   process.env.JWT_SECRET_KEY,
@@ -115,6 +115,7 @@ res.cookie("auth_token", anothertoken, {
   maxAge: 60 * 60 * 1000, // 1 hour in ms
   sameSite: "None",
 });
+}
   
   return res.status(200).json({
     message: "otp verify successfull",
