@@ -78,7 +78,7 @@ function Reset() {
     setIsLoading(true);
     try {
       const res = await axios.post(
-        `${API_BASE_URL}/api/otpgeneration`,
+        `${API_BASE_URL}/api/otpgenerationr`,
         { email },
         { withCredentials: true }
       );
