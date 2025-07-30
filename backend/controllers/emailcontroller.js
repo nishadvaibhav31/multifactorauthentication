@@ -44,7 +44,7 @@ export const otpgens = async (req, res) => {
 };
 export const otpgen = async (req, res) => {
   const { email,password } = req.body;
-  console.log(req.body);
+  console.log(req.path);
   
   try {
   
