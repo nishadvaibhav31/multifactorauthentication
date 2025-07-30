@@ -13,18 +13,7 @@ import toast from "react-hot-toast";
 function App() {
   const { user, setUser,isverified} = useContext(AuthContext);
   const Url ='https://multifactorauthentication.onrender.com'
-  useEffect(() => {
-    if (user)
-      axios
-        .get(`${Url}/api/verifytoken`, {
-          withCredentials: true,
-        })
-        .catch((error) => {
-          toast.error(error.response?.data?.message || "An error occurred");
-          // localStorage.removeItem("user");
-          setUser(null);
-        });
-  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
