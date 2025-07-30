@@ -132,7 +132,7 @@ export const reset = async (req, res) => {
   }
 };
 
-// DELETE USER
+// DELETE USEr
 export const deleteuser = async (req, res) => {
   try {
     const { username } = req.body;
