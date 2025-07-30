@@ -20,5 +20,5 @@ const otpLimiter = rateLimit({
 router.post('/otpgeneration',otpLimiterotpgen,otpgen);      //for login otp gen
 router.post('/otpgenerations',otpLimiterotpgen,otpgens);   //for signup otp gen
 router.post('/verifyotp',otpLimiter,verifyotp);           //for reset otp verify
-router.post('/verifyotpls',otpLimiter,verifyotp);         //for login signup otp verify
+router.post('/verifyotpls',otpLimiter,verifyotpls);         //for login signup otp verify
 export default router ;
