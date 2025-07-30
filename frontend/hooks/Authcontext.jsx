@@ -135,6 +135,7 @@ const AuthProvider = ({ children }) => {
         otpgen,
         otpgens,
         isverified,
+        setisverified,
         
       }}
     >
