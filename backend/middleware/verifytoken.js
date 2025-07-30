@@ -36,7 +36,7 @@ export const tokenverification = async (req, res, next) => {
 
     next();
   } catch (err) {
-    // Handle errors like an expired or invalid token
+    
     return res.status(403).json({ message: "Forbidden: Invalid token." });
   }
 };
