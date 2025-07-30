@@ -1,6 +1,6 @@
 import { Router } from "express";
 import rateLimit from "express-rate-limit";
-import { otpgen,otpgens,verifyotp,verifyotpls} from "../controllers/emailcontroller.js";
+import { otpgen,otpgens,verifyotp,otpgenr} from "../controllers/emailcontroller.js";
 const router = Router();
 const otpLimiterotpgen = rateLimit({
     windowMs: 2 * 60 * 1000, // 15 minutes
@@ -19,6 +19,7 @@ const otpLimiter = rateLimit({
   });
 router.post('/otpgeneration',otpLimiterotpgen,otpgen);      //for login otp gen
 router.post('/otpgenerations',otpLimiterotpgen,otpgens);   //for signup otp gen
-router.post('/verifyotp',otpLimiter,verifyotp);           //for reset otp verify
-router.post('/verifyotpls',otpLimiter,verifyotpls);         //for login signup otp verify
+router.post('/otpgenerationr',otpLimiterotpgen,otpgenr);      //for rest otp gen
+router.post('/verifyotp',otpLimiter,verifyotp);           //for otp verify
+
 export default router ;
