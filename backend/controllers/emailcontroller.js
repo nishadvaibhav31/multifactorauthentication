@@ -96,6 +96,7 @@ export const verifyotpls = async (req, res) => {
  
   
   const decode =jwt.verify(token,process.env.JWT_SECRET_KEY);
+  console.log("this is working");
   console.log(user);
   const user=await User.findOne({email});
   
