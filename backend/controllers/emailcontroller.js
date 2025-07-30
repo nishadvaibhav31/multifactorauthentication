@@ -97,7 +97,7 @@ export const verifyotpls = async (req, res) => {
   
   const decode =jwt.verify(token,process.env.JWT_SECRET_KEY);
   console.log("this is working");
-  console.log(user);
+  
   const user=await User.findOne({email});
   
 
@@ -106,6 +106,7 @@ export const verifyotpls = async (req, res) => {
     return res.status(401).json({ message: "wrong otp" });
   }
   if(user){
+  console.log("this is working");
  const anothertoken = jwt.sign(
   { userId: user._id },
   process.env.JWT_SECRET_KEY,
