@@ -19,7 +19,7 @@ export const tokenverification = async (req, res, next) => {
     const cachedUser = await redisClient.get(userCacheKey);
 
     if (cachedUser) {
-
+      console.log("redis is working");
       req.user = JSON.parse(cachedUser);
     } else {
       
