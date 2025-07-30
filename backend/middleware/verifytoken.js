@@ -3,7 +3,7 @@ import User from "../models/users.model.js";
 import redisClient from "../config/redis.js"; 
 
 export const tokenverification = async (req, res, next) => {
-  console.log(req.cookies);
+  // console.log(req.cookies);
   const token = req.cookies.auth_token;
 
   if (!token) {
