@@ -12,13 +12,13 @@ export const login = async (req, res) => {
   const checkpass = await bcrypt.compare(password, user.password);
   if (!checkpass)
     return res.status(400).json({ message: "invalid credentials" });
-  const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, {
-    expiresIn: "5m",
-  });
-  res.cookie("auth_token", token, {
-    httpOnly: true,
-    maxAge: 5 * 60 * 1000,
-    sameSite: "Strict",
+  // const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, {
+  //   expiresIn: "5m",
+  // });
+  // res.cookie("auth_token", token, {
+  //   httpOnly: true,
+  //   maxAge: 5 * 60 * 1000,
+  //   sameSite: "Strict",
   });
   return res.status(200).json({
     message: "login successfully",
