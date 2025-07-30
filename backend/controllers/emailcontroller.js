@@ -2,7 +2,7 @@ import otpGenerator from "otp-generator";
 import User from "../models/users.model.js";
 import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken"
-
+//otp generation for signup because email is not present in db so need to check whether email is registered or not 
 export const otpgens = async (req, res) => {
   const { email } = req.body;
   try {
@@ -43,7 +43,7 @@ export const otpgens = async (req, res) => {
   }
 };
 export const otpgen = async (req, res) => {
-  const { email,password } = req.body;
+  const { email} = req.body;
   console.log(req.path);
   
   try {
@@ -90,7 +90,8 @@ export const otpgen = async (req, res) => {
     return res.status(500).json({ message: "Error in OTP sending" });
   }
 };
-export const verifyotp = async (req, res) => {
+//for login and signup otp verification 
+export const verifyotpls = async (req, res) => {
   const { token, enterotp,email } = req.body;
  
   
@@ -125,3 +126,26 @@ res.cookie("auth_token", anothertoken, {
     },
   });
 };
+//for reset route otp verification 
+export const verifyotp = async (req, res) => {
+  const { token, enterotp,email } = req.body;
+ 
+  
+  const decode =jwt.verify(token,process.env.JWT_SECRET_KEY);
+ 
+  const user=await User.findOne({email});
+  
+
+  
+  if (decode.otp!=enterotp) {
+    return res.status(401).json({ message: "wrong otp" });
+  }
+ 
+  return res.status(200).json({
+    message: "otp verify successfull",
+    user:{
+      email,
+    },
+  });
+};
+
