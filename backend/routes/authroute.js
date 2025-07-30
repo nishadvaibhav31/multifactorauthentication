@@ -1,6 +1,6 @@
 import {Router} from "express";
 import {login,signup,logout,change, reset,deleteuser} from "../controllers/authcontroller.js"
-import {tokenverification} from "../middleware/verifytoken.js"
+import {tokenverification} from "./middleware/verifytoken.js"
 
 const router= Router();
 router.post("/login",login);
