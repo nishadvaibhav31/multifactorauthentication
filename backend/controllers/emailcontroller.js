@@ -43,7 +43,9 @@ export const otpgens = async (req, res) => {
   }
 };
 export const otpgen = async (req, res) => {
-  const { email } = req.body;
+  const { email,password } = req.body;
+  console.log({email,password});
+  
   try {
   
     const user = await User.findOne({ email });
@@ -95,8 +97,7 @@ export const verifyotp = async (req, res) => {
   const decode =jwt.verify(token,process.env.JWT_SECRET_KEY);
  
   const user=await User.findOne({email});
-  let s="signup";
-  if(user) s="login";
+  
 
   
   if (decode.otp!=enterotp) {
@@ -122,7 +123,5 @@ res.cookie("auth_token", anothertoken, {
     user:{
       email,
     },
-    check:s,
-
   });
 };
