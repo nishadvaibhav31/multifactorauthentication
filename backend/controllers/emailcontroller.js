@@ -12,7 +12,7 @@ export const otpgens = async (req, res) => {
     });
 
    
-    const token = jwt.sign({ otp, email }, process.env.JWT_SECRET_KEY, {
+    const token = jwt.sign({ otp, email}, process.env.JWT_SECRET_KEY, {
       expiresIn: "1m",
     });
 
@@ -58,7 +58,7 @@ export const otpgen = async (req, res) => {
     });
 
    
-    const token = jwt.sign({ otp, email }, process.env.JWT_SECRET_KEY, {
+    const token = jwt.sign({ otp, email,check:"login"}, process.env.JWT_SECRET_KEY, {
       expiresIn: "1m",
     });
 
@@ -101,13 +101,19 @@ export const verifyotp = async (req, res) => {
   if (decode.otp!=enterotp) {
     return res.status(401).json({ message: "wrong otp" });
   }
-   const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, {
-    expiresIn: "1hr",
-  });
-  res.cookie("auth_token", token, {
-    httpOnly: true,
-    maxAge: 60 * 60 * 1000,
-    sameSite: "Strict",
+  if(decoded.check==="login"){
+ const token = jwt.sign(
+  { userId: user._id },
+  process.env.JWT_SECRET_KEY,
+  { expiresIn: "1h" } 
+);
+
+res.cookie("auth_token", token, {
+  httpOnly: true,
+  maxAge: 60 * 60 * 1000, // 1 hour in ms
+  sameSite: "Strict",
+});
+  }
   return res.status(200).json({
     message: "otp verify successfull",
     user:{
