@@ -18,7 +18,7 @@ const AuthProvider = ({ children }) => {
     }
     try {
       const res = await axios.post(
-        `${Url}/api/verifyotpls`,
+        `${Url}/api/verifyotp`,
         { token, enterotp, email },
         { withCredentials: true }
       );
