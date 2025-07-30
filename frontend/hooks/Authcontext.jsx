@@ -99,6 +99,8 @@ const AuthProvider = ({ children }) => {
         { withCredentials: true }
       );
       toast.success("Signup successful!");
+      setisverified(false);
+      setUser(null);
     } catch (error) {
       toast.error(error.response?.data?.message || 'Error in signup');
       setUser(null);
