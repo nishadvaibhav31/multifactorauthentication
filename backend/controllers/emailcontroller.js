@@ -157,7 +157,7 @@ export const verifyotp = async (req, res) => {
   if (decode.otp!=enterotp) {
     return res.status(401).json({ message: "wrong otp" });
   }
-  if(user&&){
+  if(user){
   console.log("this is working");
  const anothertoken = jwt.sign(
   { userId: user._id },
