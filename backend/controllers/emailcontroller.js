@@ -156,7 +156,7 @@ export const verifyotp = async (req, res) => {
   
   
   const purpose=decode.purpose;
-  const purposepath=decode.purpose;
+  const purposepath=decodepurpose.purpose;
   const user=await User.findOne({email});
   
 
