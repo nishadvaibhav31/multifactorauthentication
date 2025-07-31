@@ -162,7 +162,7 @@ export const verifyotp = async (req, res) => {
 
  
   if(user&&purpose==="login"&&purposepath==="login"){
-  // console.log("this is working");
+  console.log("this is working");
  const anothertoken = jwt.sign(
   { userId: user._id },
   process.env.JWT_SECRET_KEY,
