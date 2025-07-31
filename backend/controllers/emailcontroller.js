@@ -143,13 +143,17 @@ export const otpgenr = async (req, res) => {
 };
 //for login and signup and reset otp verification 
 export const verifyotp = async (req, res) => {
-  const { token, enterotp,email } = req.body;
+  const { token, enterotp,email,purposetoken} = req.body;
  
-  
+  console.log(purposetoken);
   const decode =jwt.verify(token,process.env.JWT_SECRET_KEY);
-  // console.log(decode);
+  
+  const decodepurpose=jwt.verify(purposetoken,process.env.JWT_SECRET_KEY);
+  console.log(decodepurpose);
   // console.log("this is working");
+  
   const purpose=decode.purpose;
+  const purposepath=decode.purpose;
   const user=await User.findOne({email});
   
 
@@ -157,7 +161,7 @@ export const verifyotp = async (req, res) => {
   if (decode.otp!=enterotp) {
     return res.status(401).json({ message: "wrong otp" });
   }
-  if(user&&purpose==="login"){
+  if(user&&purpose==="login"&&purposepath==="login"){
   // console.log("this is working");
  const anothertoken = jwt.sign(
   { userId: user._id },
@@ -172,6 +176,7 @@ res.cookie("auth_token", anothertoken, {
   sameSite: "None",
 });
 }
+
   
   return res.status(200).json({
     message: "otp verify successfull",
