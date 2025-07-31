@@ -8,21 +8,18 @@ function Home() {
   const { logout } = useContext(AuthContext);
 
   return (
-    <div className="flex flex-col justify-center items-center p-4 bg-gray-100 h-screen">
-      <h1 className="text-3xl font-bold mb-4">Home</h1>
-      <div className="space-y-4">
-        <Link to="/change" className="text-blue-500 hover:underline">
-          change Password
-        </Link>
-        <br />
-        <button
-          onClick={logout}
-          className="px-6 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
-        >
-          Logout
-        </button>
-      </div>
-    </div>
+<div className="flex flex-col justify-center items-center p-4 bg-gray-100 h-screen">
+  <h1 className="text-3xl font-bold mb-4">Home</h1>
+  <div className="space-y-4">
+    <button
+      onClick={logout}
+      className="px-6 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
+    >
+      Logout
+    </button>
+  </div>
+</div>
+
   );
 }
 
