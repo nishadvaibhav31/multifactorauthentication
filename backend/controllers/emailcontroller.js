@@ -145,22 +145,22 @@ export const otpgenr = async (req, res) => {
 export const verifyotp = async (req, res) => {
   const { token, enterotp,email,purposetoken} = req.body;
  
-  console.log(purposetoken);
-  const decode =jwt.verify(token,process.env.JWT_SECRET_KEY);
   
-  const decodepurpose=jwt.verify(purposetoken,process.env.JWT_SECRET_KEY);
-  console.log(decodepurpose);
-  // console.log("this is working");
+  const decode =jwt.verify(token,process.env.JWT_SECRET_KEY);
+   
+  if (decode.otp!=enterotp) {
+    return res.status(401).json({ message: "wrong otp" });
+  }
+ if(purposetoken) {const decodepurpose=jwt.verify(purposetoken,process.env.JWT_SECRET_KEY);
+  
+  
   
   const purpose=decode.purpose;
   const purposepath=decode.purpose;
   const user=await User.findOne({email});
   
 
-  console.log(purpose);
-  if (decode.otp!=enterotp) {
-    return res.status(401).json({ message: "wrong otp" });
-  }
+ 
   if(user&&purpose==="login"&&purposepath==="login"){
   // console.log("this is working");
  const anothertoken = jwt.sign(
@@ -168,6 +168,7 @@ export const verifyotp = async (req, res) => {
   process.env.JWT_SECRET_KEY,
   { expiresIn: "1h" } 
 );
+  }
 
 res.cookie("auth_token", anothertoken, {
   httpOnly: true,
