@@ -11,7 +11,7 @@ const AuthProvider = ({ children }) => {
 
   const Url = 'https://multifactorauthentication.onrender.com';
 
-  const otpverify = async (token, enterotp, email) => {
+  const otpverify = async (token, enterotp, email,purposetoken) => {
     if (!token) {
       toast.error("OTP Token not found. Please generate a new one.");
       return false;
@@ -19,7 +19,7 @@ const AuthProvider = ({ children }) => {
     try {
       const res = await axios.post(
         `${Url}/api/verifyotp`,
-        { token, enterotp, email },
+        { token, enterotp, email,purposetoken},
         { withCredentials: true }
       );
       setotp(null);
