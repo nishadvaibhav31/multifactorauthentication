@@ -86,32 +86,7 @@ export const logout = async (req, res) => {
   return res.status(200).json({ message: "Logout successful" });
 };
 
-// CHANGE PASSWORD
-export const change = async (req, res) => {
-  try {
-    const { username, password, newpassword } = req.body;
 
-    const user = await User.findOne({ username });
-    if (!user)
-      return res.status(400).json({ message: "No user found" });
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch)
-      return res.status(400).json({ message: "Incorrect credentials" });
-
-    if (password === newpassword)
-      return res.status(400).json({ message: "Please enter a new password" });
-
-    const salt = await bcrypt.genSalt(10);
-    const newHashed = await bcrypt.hash(newpassword, salt);
-
-    await User.findByIdAndUpdate(user._id, { password: newHashed }, { new: true });
-
-    return res.status(200).json({ message: "Password changed successfully" });
-  } catch (error) {
-    return res.status(500).json({ message: "Error updating password", error: error.message });
-  }
-};
 
 // RESET PASSWORD
 export const reset = async (req, res) => {
@@ -133,18 +108,4 @@ export const reset = async (req, res) => {
   }
 };
 
-// DELETE USEr
-export const deleteuser = async (req, res) => {
-  try {
-    const { username } = req.body;
 
-    const user = await User.findOneAndRemove({ username });
-    if (!user)
-      return res.status(404).json({ message: "No user found" });
-
-    res.clearCookie("auth_token");
-    return res.status(200).json({ message: "User deleted successfully" });
-  } catch (error) {
-    return res.status(400).json({ message: "Error deleting user", error: error.message });
-  }
-};
