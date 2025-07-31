@@ -168,7 +168,7 @@ export const verifyotp = async (req, res) => {
   process.env.JWT_SECRET_KEY,
   { expiresIn: "1h" } 
 );
-  }
+  
 
 res.cookie("auth_token", anothertoken, {
   httpOnly: true,
@@ -177,7 +177,7 @@ res.cookie("auth_token", anothertoken, {
   sameSite: "None",
 });
 }
-
+ }
   
   return res.status(200).json({
     message: "otp verify successfull",
