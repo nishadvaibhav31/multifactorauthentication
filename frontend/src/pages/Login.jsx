@@ -28,7 +28,7 @@ function Login() {
   const handleOtpSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    await otpverify(otp, enterotp, email);
+    await otpverify(otp, enterotp, email,user.token);
     setIsLoading(false);
     setenterotp('');
   };
