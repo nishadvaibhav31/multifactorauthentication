@@ -8,10 +8,11 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [otp, setotp] = useState(null);
   const [isverified, setisverified] = useState(false);
-
+  console.log(user);
   const Url = 'https://multifactorauthentication.onrender.com';
 
   const otpverify = async (token, enterotp, email,purposetoken) => {
+    
     if (!token) {
       toast.error("OTP Token not found. Please generate a new one.");
       return false;
