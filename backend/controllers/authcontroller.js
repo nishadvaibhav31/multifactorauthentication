@@ -17,10 +17,10 @@ export const login = async (req, res) => {
     if (!checkpass)
       return res.status(400).json({ message: "Invalid credentials" });
 
-    // Uncomment for JWT
-    // const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, {
-    //   expiresIn: "5m",
-    // });
+    // a token for purpose
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, {
+      expiresIn: "5m",
+    });
     // res.cookie("auth_token", token, {
     //   httpOnly: true,
     //   maxAge: 5 * 60 * 1000,
@@ -32,6 +32,7 @@ export const login = async (req, res) => {
       user: {
         username: user.username,
         email: user.email,
+        token,
       },
     });
   } catch (error) {
@@ -64,7 +65,7 @@ export const signup = async (req, res) => {
     });
 
     await newUser.save();
-
+    
     return res.status(201).json({
       message: "Signup successful",
       user: {
