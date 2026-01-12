@@ -118,6 +118,21 @@ export const verifyotp = async (req, res) => {
         });
       }
     }
+    // If this is SIGNUP or RESET (Need proof of verification)
+    if (decoded.purpose === "signup" || decoded.purpose === "reset") {
+        // Generate a temporary token that proves this email was just verified
+        const verificationToken = jwt.sign(
+            { email: email, purpose: `verified_${decoded.purpose}` }, 
+            process.env.JWT_SECRET_KEY, 
+            { expiresIn: "5m" } // Valid for 5 minutes only
+        );
+
+        return res.status(200).json({
+            message: "OTP verified successfully",
+            verificationToken: verificationToken, // Client needs this for the next step
+            email: email
+        });
+    }
 
     res.status(200).json({
       message: "OTP verified successfully",
