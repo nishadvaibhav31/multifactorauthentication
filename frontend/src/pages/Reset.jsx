@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -11,7 +10,13 @@ function Reset() {
   const [enterotp, setenterotp] = useState("");
   const [newpassword, setnewpassword] = useState("");
   const [step, setStep] = useState(1);
+  
+  // State for the OTP generation token (sent to verifyotp)
   const [otpVerificationToken, setOtpVerificationToken] = useState(null);
+  
+  // NEW: State for the "Proof of Verification" token (received from verifyotp, sent to reset)
+  const [proofToken, setProofToken] = useState(null); 
+  
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -23,9 +28,14 @@ function Reset() {
     }
     setIsLoading(true);
     try {
+      // INCLUDE verificationToken IN THE REQUEST
       await axios.post(
         `${API_BASE_URL}/api/reset`,
-        { email, newpassword },
+        { 
+            email, 
+            newpassword, 
+            verificationToken: proofToken // Send the proof
+        },
         { withCredentials: true }
       );
       toast.success("Password reset successfully! Redirecting to login...");
@@ -34,6 +44,7 @@ function Reset() {
         setenterotp("");
         setnewpassword("");
         setOtpVerificationToken(null);
+        setProofToken(null);
         setStep(1);
         navigate("/login");
       }, 2000);
@@ -51,13 +62,21 @@ function Reset() {
     }
     setIsLoading(true);
     try {
-      await axios.post(
+      const res = await axios.post(
         `${API_BASE_URL}/api/verifyotp`,
         { token, enterotp: enteredOtp, email },
         { withCredentials: true }
       );
-      toast.success("OTP verified successfully!");
-      setStep(3);
+      
+      // CAPTURE THE VERIFICATION TOKEN FROM RESPONSE
+      if (res.data.verificationToken) {
+        setProofToken(res.data.verificationToken);
+        toast.success("OTP verified successfully!");
+        setStep(3);
+      } else {
+        toast.error("Verification failed. No token received.");
+      }
+
     } catch (error) {
       if (error.response?.status === 429) {
         toast.error(error.response?.data?.message || "Too many verification attempts. Please try again after 5 min.");
@@ -191,4 +210,3 @@ function Reset() {
 }
 
 export default Reset;
-
