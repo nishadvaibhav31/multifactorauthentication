@@ -30,16 +30,17 @@ function Signup() {
   const handleOtpSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const isOtpValid = await otpverify(otp, enterotp, email);
+// 1. Capture the verification token returned by otpverify
+    const verificationToken = await otpverify(otp, enterotp, email);
 
-    if (isOtpValid) {
-      await signup(username, fullname, email, password, confirmpassword);
+    // 2. If we have a valid token, proceed to signup
+    if (verificationToken) {
+      // 3. Pass the token to the signup function
+      await signup(username, fullname, email, password, confirmpassword, verificationToken);
+      
       setisverified(false);
-      
       navigate('/login');
-      
     }
-    
     setIsLoading(false);
   };
 
