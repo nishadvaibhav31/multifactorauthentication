@@ -39,21 +39,36 @@ export const login = async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 };
-
-// SIGNUP
+//signup
 export const signup = async (req, res) => {
   try {
-    const { username, fullname, email, password, confirmpassword } = req.body;
+    const { username, fullname, email, password, confirmpassword, verificationToken } = req.body;
 
+    // 1. SECURITY CHECK: Verify the token
+    if (!verificationToken) {
+        return res.status(401).json({ message: "Verification missing. Please verify OTP first." });
+    }
+    try {
+        const decoded = jwt.verify(verificationToken, process.env.JWT_SECRET_KEY);
+        if (decoded.purpose !== "verified_signup" || decoded.email !== email) {
+            return res.status(403).json({ message: "Invalid verification token." });
+        }
+    } catch (err) {
+        return res.status(403).json({ message: "Invalid or expired verification token." });
+    }
+
+    // 2. Standard Checks
     if (await User.findOne({ username }))
       return res.status(400).json({ message: "Username already taken" });
 
+    // (Optional: Email check is redundant here if OTP checked it, but good for safety)
     if (await User.findOne({ email }))
       return res.status(400).json({ message: "Email already taken" });
 
     if (password !== confirmpassword)
       return res.status(400).json({ message: "Passwords do not match" });
 
+    // 3. Create User
     const salt = await bcrypt.genSalt(10);
     const hashpassword = await bcrypt.hash(password, salt);
 
@@ -68,11 +83,7 @@ export const signup = async (req, res) => {
     
     return res.status(201).json({
       message: "Signup successful",
-      user: {
-        username,
-        fullname,
-        email,
-      },
+      user: { username, fullname, email },
     });
 
   } catch (error) {
@@ -80,26 +91,28 @@ export const signup = async (req, res) => {
   }
 };
 
-// LOGOUT
-export const logout = async (req, res) => {
-   res.clearCookie("auth_token", {
-    httpOnly: true,
-    secure: true,
-    sameSite: "None",
-  });
-  return res.status(200).json({ message: "Logout successful" });
-};
-
-
 
 // RESET PASSWORD
 export const reset = async (req, res) => {
   try {
-    const { email, newpassword } = req.body;
+    const { email, newpassword, verificationToken } = req.body;
 
+    // 1. SECURITY CHECK: Verify the token
+    if (!verificationToken) {
+        return res.status(401).json({ message: "Verification missing." });
+    }
+    try {
+        const decoded = jwt.verify(verificationToken, process.env.JWT_SECRET_KEY);
+        if (decoded.purpose !== "verified_reset" || decoded.email !== email) {
+            return res.status(403).json({ message: "Invalid verification token." });
+        }
+    } catch (err) {
+        return res.status(403).json({ message: "Invalid or expired verification token." });
+    }
+
+    // 2. Update Password
     const user = await User.findOne({ email });
-    if (!user)
-      return res.status(400).json({ message: "No user found" });
+    if (!user) return res.status(400).json({ message: "No user found" });
 
     const salt = await bcrypt.genSalt(10);
     const newHash = await bcrypt.hash(newpassword, salt);
@@ -111,5 +124,4 @@ export const reset = async (req, res) => {
     return res.status(500).json({ message: "Error resetting password", error: error.message });
   }
 };
-
 
