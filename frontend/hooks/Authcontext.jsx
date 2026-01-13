@@ -26,7 +26,7 @@ const AuthProvider = ({ children }) => {
       setotp(null);
       setisverified(true);
       toast.success(`Otp verified successfully`);
-      return true;
+      return res.data.verificationToken;
     } catch (error) {
        if (error.response?.status === 429) {
         toast.error(error.response?.data?.message || "Too many Verification attempt. Please try again after 5 minutes.");
@@ -92,20 +92,23 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const signup = async (username, fullname, email, password, confirmpassword) => {
+  const signup = async (username, fullname, email, password, confirmpassword, verificationToken) => {
     try {
-      await axios.post(
-        `${Url}/api/signup`,
-        { username, fullname, email, password, confirmpassword },
-        { withCredentials: true }
-      );
-      setisverified(false);
-      setUser(null);
+      const res = await axios.post(`${URL}/api/signup`, {
+        username, 
+        fullname, 
+        email, 
+        password, 
+        confirmpassword,
+        verificationToken // Send the proof
+      });
+      
       toast.success("Signup successful!");
-     
+      setUser(res.data.user);
+      return true;
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Error in signup');
-      setUser(null);
+      toast.error(error.response?.data?.message || "Signup failed");
+      return false;
     }
   };
 
