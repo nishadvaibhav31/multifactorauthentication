@@ -124,4 +124,12 @@ export const reset = async (req, res) => {
     return res.status(500).json({ message: "Error resetting password", error: error.message });
   }
 };
+export const logout = async (req, res) => {
+   res.clearCookie("auth_token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+  });
+  return res.status(200).json({ message: "Logout successful" });
+};
 
