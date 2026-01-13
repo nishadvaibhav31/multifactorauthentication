@@ -26,7 +26,7 @@ const AuthProvider = ({ children }) => {
       setotp(null);
       setisverified(true);
       toast.success(`Otp verified successfully`);
-      return res.data.verificationToken;
+      return res.data.verificationToken||true;
     } catch (error) {
        if (error.response?.status === 429) {
         toast.error(error.response?.data?.message || "Too many Verification attempt. Please try again after 5 minutes.");
