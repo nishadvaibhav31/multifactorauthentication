@@ -99,7 +99,7 @@ function Reset() {
       const res = await axios.post(
         `${API_BASE_URL}/api/otpgenerationr`,
         { email },
-        { withCredentials: true }
+
       );
       setOtpVerificationToken(res.data.token);
       setStep(2);
