@@ -3,6 +3,17 @@ import User from "../models/users.model.js";
 import jwt from "jsonwebtoken";
 import SibApiV3Sdk from 'sib-api-v3-sdk';
 
+
+// DEBUGGING BLOCK (Remove after fixing)
+console.log("--- DEBUGGING ENV VARS ---");
+console.log("Email Present:", !!process.env.EMAIL); // Should print true
+console.log("API Key Present:", !!process.env.BREVO_API_KEY); // Should print true
+if (process.env.BREVO_API_KEY) {
+    console.log("API Key Start:", process.env.BREVO_API_KEY.substring(0, 5)); // Prints first 5 chars
+} else {
+    console.log("API KEY IS UNDEFINED!");
+}
+console.log("--------------------------");
 // Configure Brevo API Key
 SibApiV3Sdk.ApiClient.instance.authentications['api-key'].apiKey = process.env.BREVO_API_KEY;
 
